@@ -12,8 +12,8 @@ export default props => {
     routing: routerReducer
   });
 
-  let middlewares = [thunkMiddleware];
   if (process.env.NODE_ENV == 'development') {
+    //debugging tools
     const logger = createLogger({
       stateTransformer: (state) => {
         let newState = {};
@@ -30,9 +30,14 @@ export default props => {
         return newState;
       }
     });
-    middlewares.push(logger)
+    var middleware = compose(
+        applyMiddleware(thunkMiddleware, logger),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
+    );
+  } else {
+    var middleware = applyMiddleware(thunkMiddleware);
   }
-  const middleware = applyMiddleware(...middlewares);
+
   const store = createStore(reducer, middleware);
   return store;
 };

@@ -6,7 +6,6 @@ export default class RecordsWidget extends React.Component {
     };
     render() {
         const items = this.props.records.items;
-        console.log(this.props);
         if (this.props.records.isFetching == true) {
             return (<div>fetching...</div>)
         } else {
@@ -14,7 +13,6 @@ export default class RecordsWidget extends React.Component {
             for (let i = 0; i < items.length; i++) {
                 itemsArr.push(<div key={items[i].id}>{items[i].first_name}</div>);
             }
-            console.log(itemsArr);
             return (
                 <div>{itemsArr}</div>
             );
