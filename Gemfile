@@ -49,3 +49,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails_12factor', group: :production
 gem 'react_on_rails', '~> 6.0', '>= 6.0.4'
 gem 'therubyracer', platforms: :ruby
+ruby '2.3.1'
