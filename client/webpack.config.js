@@ -42,7 +42,7 @@ config = {
         exclude: /node_modules/,
       },
     ],
-  },
+  }
 };
 
 module.exports = config;

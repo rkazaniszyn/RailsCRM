@@ -4,14 +4,14 @@ import { Link } from 'react-router';
 
 const RouterLayout = ({ children }) => (
     <div className="container">
-        <h1>React Router is working!</h1>
+        <h1>Router dziala!</h1>
         <p>
-            Woohoo, we can use <code>react-router</code> here!
+            siema siema!
         </p>
         <ul>
             <li>
                 <Link to="/">
-                    React Router Layout Only
+                    Layout
                 </Link>
             </li>
             <li>
@@ -22,6 +22,16 @@ const RouterLayout = ({ children }) => (
             <li>
                 <Link to="/second_page">
                     Router Second Page
+                </Link>
+            </li>
+            <li>
+                <Link to="/hello_world">
+                   Hello world
+                </Link>
+            </li>
+            <li>
+                <Link to="/records">
+                    Records
                 </Link>
             </li>
         </ul>
