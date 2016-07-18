@@ -12,8 +12,6 @@ import RouterSecondPage from '../components/RouterSecondPage';
 import HelloWorld from '../containers/HelloWorld';
 import Records from '../containers/Records';
 
-
-
 const App = (props, _railsContext) => {
   const store = createStore(props);
   const history = syncHistoryWithStore(browserHistory, store);

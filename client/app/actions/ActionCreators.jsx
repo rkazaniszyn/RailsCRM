@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import config from '../config';
 export function updateName(name) {
     return {
         type: 'HELLO_WORLD_NAME_UPDATE',
@@ -52,7 +52,7 @@ export function fetchRecords(module) {
         // In this case, we return a promise to wait for.
         // This is not required by thunk middleware, but it is convenient for us.
 
-        return axios.get('http://localhost:5000/api/v1/contacts')
+        return axios.get(config.apiUrl+'/contacts')
             // .then(response => response.json())
             .then(json =>
 
