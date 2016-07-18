@@ -1,9 +1,9 @@
 {
-  "name": "react-webpack-rails-tutorial",
+  "name": "railscrm-client",
   "version": "0.0.1",
   "engines": {
-    "node": "5.10.0",
-    "npm": "3.5.0"
+    "node": "6.2.2",
+    "npm": "3.9.5"
   },
   "scripts": {
     "build:test": "webpack --config webpack.config.js",
