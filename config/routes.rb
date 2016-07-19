@@ -5,6 +5,5 @@ Rails.application.routes.draw do
       resources :contacts, controller: :contacts
     end
   end
-  get 'hello_world', to: 'page#index'
   match '*path', to: 'page#index', via: [:get]
 end
