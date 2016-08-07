@@ -12,7 +12,7 @@ export default props => {
     routing: routerReducer
   });
 
-  if (process.env.NODE_ENV == 'development') {
+  if (process.env.NODE_ENV == 'development' && false) {
     //debugging tools
     const logger = createLogger({
       stateTransformer: (state) => {

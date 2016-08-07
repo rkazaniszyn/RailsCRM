@@ -3,8 +3,14 @@
 // A real world app will likely have many reducers and it helps to organize them in one file.
 import helloWorldReducer from './helloWorldReducer';
 import recordsReducer from './RecordsReducer';
+import uiReducer from './UIReducer';
+import recordReducer from './RecordReducer';
+import metadataReducer from './MetadataReducer';
 
 export default {
   name: helloWorldReducer,
-  records: recordsReducer
+  records: recordsReducer,
+  record: recordReducer,
+  ui: uiReducer,
+  metadata: metadataReducer
 };

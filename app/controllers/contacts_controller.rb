@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
     render json: @contacts
   end
   def show
-    # @contact = Contact.all
-    # render json: @contacts
+    @contact = Contact.find(params[:id])
+    render json: @contact
   end
 end

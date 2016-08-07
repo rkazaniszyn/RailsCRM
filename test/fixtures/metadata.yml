@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  module: MyString
+  field: MyString
+  label: MyString
+  type: 
+  order: 1
+  required: false
+  comment: MyString
+
+two:
+  module: MyString
+  field: MyString
+  label: MyString
+  type: 
+  order: 1
+  required: false
+  comment: MyString

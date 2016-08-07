@@ -1,9 +1,9 @@
 import Immutable from 'immutable';
-export default function recordsReducer(state = Immutable.fromJS({items:[]}), action) {
+export default function recordReducer(state = Immutable.fromJS({item:{}}), action) {
     switch (action.type) {
-        case 'RECEIVE_RECORDS':
+        case 'RECEIVE_RECORD':
             return state.merge({
-                items: action.records
+                item: action.record
             })
         default:
             return state

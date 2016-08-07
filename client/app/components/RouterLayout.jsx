@@ -2,8 +2,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const RouterLayout = ({ children }) => (
+const RouterLayout = (props) => {
+    const { children } = props;
+    var loader = '';
+    if (props.ui.ajax.isFetching) {
+        loader = <div>Loading...</div>;
+    }
+    return (
     <div className="container">
+        {loader}
         <h1>Router dziala!</h1>
         <p>
             siema siema!
@@ -26,19 +33,19 @@ const RouterLayout = ({ children }) => (
             </li>
             <li>
                 <Link to="/hello_world">
-                   Hello world
+                    Hello world
                 </Link>
             </li>
             <li>
-                <Link to="/records">
+                <Link to="/Contacts">
                     Records
                 </Link>
             </li>
         </ul>
         <hr />
         {children}
-    </div>
-);
+    </div>);
+};
 
 RouterLayout.propTypes = {
     children: React.PropTypes.object,

@@ -7,8 +7,8 @@
       <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddff8dfefdfebdfe9dffedf87dff8dfefdfeedfffdff2dff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
     </data-source>
     <data-source name="Rails training: development" uuid="44cd2efd-24ef-4bf8-b81a-866305a7f894">
-      <schema-pattern>training_development.*</schema-pattern>
-      <default-schemas>training_development.*</default-schemas>
+      <introspection-scope>training_development:*</introspection-scope>
+      <resolve-scope>training_development:*</resolve-scope>
     </data-source>
   </component>
 </project>
