@@ -6,11 +6,13 @@ import recordsReducer from './RecordsReducer';
 import uiReducer from './UIReducer';
 import recordReducer from './RecordReducer';
 import metadataReducer from './MetadataReducer';
+import userReducer from './UserReducer';
 
 export default {
   name: helloWorldReducer,
   records: recordsReducer,
   record: recordReducer,
   ui: uiReducer,
-  metadata: metadataReducer
+  metadata: metadataReducer,
+  user: userReducer,
 };

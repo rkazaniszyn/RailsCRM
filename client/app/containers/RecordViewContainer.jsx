@@ -6,7 +6,6 @@ import RecordView from '../components/RecordView';
 import _ from 'lodash';
 
 function select(state, props) {
-    console.log(state.record.toJS());
     const record = state.record.get('item').toJS();
     const metadata = state.metadata.toJS()[props.params.module];
     return {

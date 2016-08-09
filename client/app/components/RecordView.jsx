@@ -8,4 +8,3 @@ export default (props) => {
     }
     return(<div>{rows}</div>)
 }
-

@@ -1,4 +1,5 @@
-class MetadataController < ApplicationController
+class Api::V1::MetadataController < Api::V1::ApiController
+  before_filter :authenticate_request!
   def search
     if params[:module]
       @contacts = Metadatum.all

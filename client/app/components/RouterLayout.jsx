@@ -10,6 +10,12 @@ const RouterLayout = (props) => {
     }
     return (
     <div className="container">
+        <form method="POST" action="/api/v1/auth_user">
+            <input type="text" name="email"/><br/>
+            <input type="password" name="password"/><br/>
+            <input type="password" name="confirm_password"/><br/>
+            <input type="submit" value="Submit"/>
+        </form>
         {loader}
         <h1>Router dziala!</h1>
         <p>
@@ -37,7 +43,7 @@ const RouterLayout = (props) => {
                 </Link>
             </li>
             <li>
-                <Link to="/Contacts">
+                <Link to="/modules/Contacts">
                     Records
                 </Link>
             </li>

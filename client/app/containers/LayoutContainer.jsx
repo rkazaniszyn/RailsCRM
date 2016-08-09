@@ -8,9 +8,9 @@ function select(state) {
 }
 
 class LayoutContainer extends React.Component {
-    componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(ActionCreators.fetchMetadata(this.props.params.module));
+    componentDidMount()
+    {
+        alert('asd');
     }
     render() {
         return (<RouterLayout ui={this.props.ui.toJS()} children={this.props.children}/>);

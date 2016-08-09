@@ -12,6 +12,8 @@ import RouterSecondPage from '../components/RouterSecondPage';
 import HelloWorld from '../containers/HelloWorld';
 import RecordsContainer from '../containers/RecordsContainer';
 import RecordViewContainer from '../containers/RecordViewContainer';
+import AuthenticationDecorator from '../containers/AuthenticationDecorator';
+import ModuleContainer from '../containers/ModuleContainer';
 
 const App = (props, _railsContext) => {
   const store = createStore(props);
@@ -19,12 +21,14 @@ const App = (props, _railsContext) => {
   const reactComponent = (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={LayoutContainer}>
+        <Route path="/" component={AuthenticationDecorator(LayoutContainer)}>
           <Route path="first_page" component={RouterFirstPage} />
           <Route path="second_page" component={RouterSecondPage} />
           <Route path="hello_world" component={HelloWorld} />
-          <Route path=":module" component={RecordsContainer} />
-          <Route path=":module/:id" component={RecordViewContainer}/>
+          <Route path="modules" component={ModuleContainer}>
+              <Route path=":module" component={RecordsContainer} />
+                <Route path=":module/:id" component={RecordViewContainer}/>
+          </Route>
          </Route>
       </Router>
     </Provider>

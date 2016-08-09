@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from '../reducers';
 import createLogger from 'redux-logger';
 import Immutable from 'immutable';
+import api from '../middleware/api';
 
 export default props => {
 
@@ -31,11 +32,11 @@ export default props => {
       }
     });
     var middleware = compose(
-        applyMiddleware(thunkMiddleware, logger),
+        applyMiddleware(thunkMiddleware, logger, api),
         window.devToolsExtension ? window.devToolsExtension() : f => f
     );
   } else {
-    var middleware = applyMiddleware(thunkMiddleware);
+    var middleware = applyMiddleware(thunkMiddleware, api);
   }
 
   const store = createStore(reducer, middleware);
