@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import LogoutContainer from '../containers/LogoutContainer';
+import ReduxToastr from 'react-redux-toastr';
 
 const RouterLayout = (props) => {
     const { children } = props;
@@ -11,6 +12,10 @@ const RouterLayout = (props) => {
     }
     return (
     <div className="container">
+        <ReduxToastr
+            timeOut={2000}
+            newestOnTop={false}
+            position="top-left"/>
         {loader}
         <h1>Naglowek</h1>
         <LogoutContainer />

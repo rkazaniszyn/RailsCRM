@@ -23,8 +23,7 @@ class LoginContainer extends React.Component
     }
     render() {
         const { dispatch } = this.props;
-        return (<Login errorMessage=""
-                       onLoginClick={ creds => dispatch(ActionCreators.loginUser(creds)) }/>)
+        return (<Login onLoginClick={ creds => dispatch(ActionCreators.loginUser(creds)) }/>)
     }
 }
 function select(state) {

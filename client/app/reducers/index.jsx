@@ -7,6 +7,7 @@ import uiReducer from './UIReducer';
 import recordReducer from './RecordReducer';
 import metadataReducer from './MetadataReducer';
 import userReducer from './UserReducer';
+import {reducer as toastrReducer} from 'react-redux-toastr'
 
 export default {
   name: helloWorldReducer,
@@ -15,4 +16,5 @@ export default {
   ui: uiReducer,
   metadata: metadataReducer,
   user: userReducer,
+  toastr: toastrReducer
 };

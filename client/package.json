@@ -35,6 +35,7 @@
     "react-dom": "^15.2.1",
     "react-on-rails": "6.0.4",
     "react-redux": "^4.4.5",
+    "react-redux-toastr": "^3.6.0",
     "react-router": "^2.5.2",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",

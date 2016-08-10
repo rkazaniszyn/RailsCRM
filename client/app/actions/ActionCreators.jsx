@@ -1,4 +1,5 @@
 import api from '../helpers/api';
+import { toastr } from 'react-redux-toastr';
 
 export function updateName(name) {
     return {
@@ -45,13 +46,6 @@ function receiveMetadata(module, json) {
     }
 }
 
-function ajaxError(error) {
-    return {
-        type: 'AJAX_ERROR',
-        error
-    }
-}
-
 export function fetchRecords(module) {
     return function (dispatch) {
         dispatch(ajaxStart())
@@ -60,7 +54,7 @@ export function fetchRecords(module) {
                     dispatch(receiveRecords(module, json.data))
                     dispatch(ajaxStop())
             }).catch(error => {
-                dispatch(ajaxError(error));
+                populateError(error);
             });
     }
 }
@@ -73,7 +67,7 @@ export function fetchRecord(module, id)
                 dispatch(receiveRecord(module, json.data))
                 dispatch(ajaxStop())
             }).catch(error => {
-                dispatch(ajaxError(error));
+                populateError(error);
             });
     }
 }
@@ -87,94 +81,47 @@ export function fetchMetadata(module)
                     dispatch(receiveMetadata(module, json.data))
                     dispatch(ajaxStop())
                 }).catch(error => {
-                    dispatch(ajaxError(error));
+                    populateError(error);
                 });
         }
     }
 }
 
-// There are three possible states for our login
-// process and we need actions for each of them
-export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'
-
-function requestLogin(creds) {
-    return {
-        type: LOGIN_REQUEST,
-        isFetching: true,
-        isAuthenticated: false,
-        creds
-    }
-}
-
 function receiveLogin(user) {
     return {
-        type: LOGIN_SUCCESS,
-        isFetching: false,
-        isAuthenticated: true,
+        type: 'LOGIN_SUCCESS',
         data: user,
-    }
-}
-
-function loginError(message) {
-    return {
-        type: LOGIN_FAILURE,
-        isFetching: false,
-        isAuthenticated: false,
-        message
-    }
-}
-
-// Three possible states for our logout process as well.
-// Since we are using JWTs, we just need to remove the token
-// from localStorage. These actions are more useful if we
-// were calling the API to log the user out
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
-
-function requestLogout() {
-    return {
-        type: LOGOUT_REQUEST,
-        isFetching: true,
-        isAuthenticated: true
     }
 }
 
 function receiveLogout() {
     return {
-        type: LOGOUT_SUCCESS,
-        isFetching: false,
-        isAuthenticated: false
+        type: 'LOGOUT_SUCCESS',
     }
 }
 
-// Calls the API to get a token and
-// dispatches actions along the way
 export function loginUser(creds) {
     return dispatch => {
         // We dispatch requestLogin to kickoff the call to the API
-        dispatch(requestLogin(creds));
+        dispatch(ajaxStart());
         return api(false).post('/auth_user', {
             'email':creds.email,
             'password':creds.password})
             .then((json) => {
+                dispatch(ajaxStop());
                 const { user, auth_token } = json.data
                 if (!auth_token) {
-                    // If there was a problem, we want to
-                    // dispatch the error condition
-                    dispatch(loginError(json.data.errors[0]))
-                }
-                else {
+                    populateError('Something went wrong.');
+                } else {
                     // If login was successful, set the token in local storage
                     localStorage.setItem('id_token', auth_token)
-
                     // Dispatch the success action
                     dispatch(receiveLogin(user))
+                    populateSuccess('Hurraaay! You are logged in.');
                 }
-            }).catch(error => {
-                dispatch(ajaxError(error));
+            }).catch((error) => {
+                const data = JSON.parse(error.response.data);
+                populateError(data.errors[0]);
             });
     }
 }
@@ -182,8 +129,15 @@ export function loginUser(creds) {
 // Logs the user out
 export function logoutUser() {
     return dispatch => {
-        dispatch(requestLogout())
         localStorage.removeItem('id_token')
         dispatch(receiveLogout())
+        populateSuccess('You have been logged out.')
     }
+}
+
+function populateError(error) {
+    toastr.error('The title', error);
+}
+function populateSuccess(message) {
+    toastr.success('The title', message);
 }
