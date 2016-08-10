@@ -1,5 +1,5 @@
-import axios from 'axios';
-import config from '../config';
+import api from '../helpers/api';
+
 export function updateName(name) {
     return {
         type: 'HELLO_WORLD_NAME_UPDATE',
@@ -55,7 +55,7 @@ function ajaxError(error) {
 export function fetchRecords(module) {
     return function (dispatch) {
         dispatch(ajaxStart())
-        return axios.get(config.apiUrl+'/'+module)
+        return api().get('/'+module)
             .then((json) => {
                     dispatch(receiveRecords(module, json.data))
                     dispatch(ajaxStop())
@@ -68,7 +68,7 @@ export function fetchRecord(module, id)
 {
     return function (dispatch) {
         dispatch(ajaxStart())
-        return axios.get(config.apiUrl+'/'+module+'/'+id)
+        return api().get('/'+module+'/'+id)
             .then((json) => {
                 dispatch(receiveRecord(module, json.data))
                 dispatch(ajaxStop())
@@ -82,7 +82,7 @@ export function fetchMetadata(module)
 {
     return  (dispatch, getState) => {
         if (!getState().metadata.get(module)) {
-            return axios.get(config.apiUrl + '/metadata/' + module)
+            return api().get('/metadata/' + module)
                 .then((json) => {
                     dispatch(receiveMetadata(module, json.data))
                     dispatch(ajaxStop())
@@ -92,11 +92,6 @@ export function fetchMetadata(module)
         }
     }
 }
-
-
-
-
-
 
 // There are three possible states for our login
 // process and we need actions for each of them
@@ -118,7 +113,7 @@ function receiveLogin(user) {
         type: LOGIN_SUCCESS,
         isFetching: false,
         isAuthenticated: true,
-        id_token: user.id_token
+        data: user,
     }
 }
 
@@ -160,16 +155,16 @@ function receiveLogout() {
 export function loginUser(creds) {
     return dispatch => {
         // We dispatch requestLogin to kickoff the call to the API
-        dispatch(requestLogin(creds))
-        return axios.post(config.apiUrl+'/auth_user', {
-                'email':creds.email,
-                'password':creds.password})
+        dispatch(requestLogin(creds));
+        return api(false).post('/auth_user', {
+            'email':creds.email,
+            'password':creds.password})
             .then((json) => {
                 const { user, auth_token } = json.data
                 if (!auth_token) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(loginError(user.message))
+                    dispatch(loginError(json.data.errors[0]))
                 }
                 else {
                     // If login was successful, set the token in local storage

@@ -14,6 +14,7 @@ import RecordsContainer from '../containers/RecordsContainer';
 import RecordViewContainer from '../containers/RecordViewContainer';
 import AuthenticationDecorator from '../containers/AuthenticationDecorator';
 import ModuleContainer from '../containers/ModuleContainer';
+import LoginContainer from '../containers/LoginContainer';
 
 const App = (props, _railsContext) => {
   const store = createStore(props);
@@ -30,6 +31,7 @@ const App = (props, _railsContext) => {
                 <Route path=":module/:id" component={RecordViewContainer}/>
           </Route>
          </Route>
+        <Route path="/login" component={LoginContainer}/>
       </Router>
     </Provider>
   );

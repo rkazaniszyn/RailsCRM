@@ -7,11 +7,18 @@ export default (ChildComponent) => {
         static propTypes = {
             user: PropTypes.object.isRequired
         };
-
+        static contextTypes = {
+            router: PropTypes.object.isRequired
+        };
+        componentWillMount() {
+            const { router } = this.context;
+            if (!this.props.user.isAuthenticated) {
+                router.push('/login');
+            }
+        }
         render () {
-            const { user } = this.props;
             //user.isLoggedIn
-            return (true ? <ChildComponent {...this.props} /> : <Login />)
+            return (<ChildComponent {...this.props} />)
         }
     }
 

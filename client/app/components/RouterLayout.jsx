@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
+import LogoutContainer from '../containers/LogoutContainer';
 
 const RouterLayout = (props) => {
     const { children } = props;
@@ -10,17 +11,9 @@ const RouterLayout = (props) => {
     }
     return (
     <div className="container">
-        <form method="POST" action="/api/v1/auth_user">
-            <input type="text" name="email"/><br/>
-            <input type="password" name="password"/><br/>
-            <input type="password" name="confirm_password"/><br/>
-            <input type="submit" value="Submit"/>
-        </form>
         {loader}
-        <h1>Router dziala!</h1>
-        <p>
-            siema siema!
-        </p>
+        <h1>Naglowek</h1>
+        <LogoutContainer />
         <ul>
             <li>
                 <Link to="/">

@@ -10,7 +10,8 @@ import {
 // we would also want a util to check if the token is expired.
 export default function userReducer(state = Immutable.fromJS({
     isFetching: false,
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
+    isAuthenticated: localStorage.getItem('id_token') ? true : false,
+    data: {}
 }), action) {
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -23,18 +24,21 @@ export default function userReducer(state = Immutable.fromJS({
             return state.merge({
                 isFetching: false,
                 isAuthenticated: true,
-                errorMessage: ''
+                errorMessage: '',
+                data: action.data,
             });
         case LOGIN_FAILURE:
             return state.merge({
                 isFetching: false,
                 isAuthenticated: false,
-                errorMessage: action.message
+                errorMessage: action.message,
+                data: {},
             });
         case LOGOUT_SUCCESS:
             return state.merge({
                 isFetching: true,
-                isAuthenticated: false
+                isAuthenticated: false,
+                data: {},
             });
         default:
             return state
