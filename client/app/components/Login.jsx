@@ -1,21 +1,23 @@
 import React, { PropTypes } from 'react'
 
 export default class Login extends React.Component {
-
+    componentDidMount() {
+        document.body.classList.add('signin')
+    }
+    componentWillUnmount() {
+        document.body.classList.remove('signin')
+    }
     render() {
-        const { errorMessage } = this.props
-
         return (
-            <div>
-                <input type='text' ref='email' className="form-control" style={{ marginRight: '5px' }} placeholder='Email'/>
-                <input type='password' ref='password' className="form-control" style={{ marginRight: '5px' }} placeholder='Password'/>
-                <button onClick={(event) => this.handleClick(event)} className="btn btn-primary">
-                    Login
-                </button>
-
-                {errorMessage &&
-                <p style={{color:'red'}}>{errorMessage}</p>
-                }
+            <div className="container">
+                <form className="form-signin">
+                    <h2 className="form-signin-heading">Please sign in</h2>
+                    <label for="inputEmail" className="sr-only">Email address</label>
+                    <input type="email" id="inputEmail" ref="email" className="form-control" placeholder="Email address" required autofocus />
+                    <label for="inputPassword" className="sr-only">Password</label>
+                    <input type="password" ref="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                    <button onClick={(event) => this.handleClick(event)} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                </form>
             </div>
         )
     }
