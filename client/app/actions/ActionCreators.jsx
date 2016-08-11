@@ -120,8 +120,7 @@ export function loginUser(creds) {
                     populateSuccess('Hurraaay! You are logged in.');
                 }
             }).catch((error) => {
-                const data = JSON.parse(error.response.data);
-                populateError(data.errors[0]);
+                populateError(error.response.data.errors[0]);
             });
     }
 }
@@ -138,6 +137,7 @@ export function logoutUser() {
 function populateError(error) {
     toastr.error('The title', error);
 }
+
 function populateSuccess(message) {
     toastr.success('The title', message);
 }
