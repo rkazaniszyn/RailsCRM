@@ -4,7 +4,7 @@ switch (process.env.NODE_ENV) {
         config.apiUrl = 'http://localhost:5000/api/v1';
         break;
     case 'production' :
-        config.apiUrl = 'https://safe-citadel-31187.herokuapp.com/api/v1';
+        config.apiUrl = 'https://radekcrm.herokuapp.com/api/v1';
         break;
 }
 
