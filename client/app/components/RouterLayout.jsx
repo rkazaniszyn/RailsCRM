@@ -3,21 +3,18 @@ import React from 'react';
 import { Link } from 'react-router';
 import LogoutContainer from '../containers/LogoutContainer';
 import ReduxToastr from 'react-redux-toastr';
+import { Spinner } from 'react-redux-spinner';
 
 const RouterLayout = (props) => {
     const { children } = props;
-    var loader = '';
-    if (props.ui.ajax.isFetching) {
-        loader = <div>Loading...</div>;
-    }
     return (
     <div className="container">
+        <Spinner />
         <ReduxToastr
             timeOut={2000}
             newestOnTop={false}
             position="top-left"/>
-        {loader}
-        <h1>Naglowek</h1>
+        <h1>Some Header</h1>
         <LogoutContainer />
         <ul>
             <li>

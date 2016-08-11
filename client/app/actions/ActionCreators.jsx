@@ -1,5 +1,6 @@
 import api from '../helpers/api';
 import { toastr } from 'react-redux-toastr';
+import { pendingTask, begin, end } from 'react-redux-spinner';
 
 export function updateName(name) {
     return {
@@ -10,12 +11,14 @@ export function updateName(name) {
 
 function ajaxStart() {
     return {
-        type: 'AJAX_START'
+        type: 'AJAX_START',
+        [ pendingTask ]: begin
     }
 }
 function ajaxStop() {
     return {
-        type: 'AJAX_STOP'
+        type: 'AJAX_STOP',
+        [ pendingTask ]: end
     }
 }
 
@@ -54,6 +57,7 @@ export function fetchRecords(module) {
                     dispatch(receiveRecords(module, json.data))
                     dispatch(ajaxStop())
             }).catch(error => {
+                dispatch(ajaxStop())
                 populateError(error);
             });
     }
@@ -67,6 +71,7 @@ export function fetchRecord(module, id)
                 dispatch(receiveRecord(module, json.data))
                 dispatch(ajaxStop())
             }).catch(error => {
+                dispatch(ajaxStop())
                 populateError(error);
             });
     }
@@ -76,11 +81,13 @@ export function fetchMetadata(module)
 {
     return  (dispatch, getState) => {
         if (!getState().metadata.get(module)) {
+            dispatch(ajaxStart())
             return api().get('/metadata/' + module)
                 .then((json) => {
                     dispatch(receiveMetadata(module, json.data))
                     dispatch(ajaxStop())
                 }).catch(error => {
+                    dispatch(ajaxStop())
                     populateError(error);
                 });
         }
@@ -120,6 +127,7 @@ export function loginUser(creds) {
                     populateSuccess('Hurraaay! You are logged in.');
                 }
             }).catch((error) => {
+                dispatch(ajaxStop())
                 populateError(error.response.data.errors[0]);
             });
     }

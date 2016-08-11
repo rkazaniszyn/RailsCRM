@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReduxToastr from 'react-redux-toastr';
+import { Spinner } from 'react-redux-spinner';
 
 export default class Login extends React.Component {
     componentDidMount() {
@@ -12,6 +13,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="container">
+                <Spinner />
                 <ReduxToastr
                     timeOut={2000}
                     newestOnTop={false}
