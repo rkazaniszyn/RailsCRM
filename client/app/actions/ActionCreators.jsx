@@ -9,13 +9,13 @@ export function updateName(name) {
     };
 }
 
-function ajaxStart() {
+export function ajaxStart() {
     return {
         type: 'AJAX_START',
         [ pendingTask ]: begin
     }
 }
-function ajaxStop() {
+export function ajaxStop() {
     return {
         type: 'AJAX_STOP',
         [ pendingTask ]: end
@@ -51,13 +51,10 @@ function receiveMetadata(module, json) {
 
 export function fetchRecords(module) {
     return function (dispatch) {
-        dispatch(ajaxStart())
-        return api().get('/'+module)
+        return api(dispatch).get('/'+module)
             .then((json) => {
-                    dispatch(receiveRecords(module, json.data))
-                    dispatch(ajaxStop())
+                dispatch(receiveRecords(module, json.data))
             }).catch(error => {
-                dispatch(ajaxStop())
                 populateError(error);
             });
     }
@@ -65,13 +62,10 @@ export function fetchRecords(module) {
 export function fetchRecord(module, id)
 {
     return function (dispatch) {
-        dispatch(ajaxStart())
-        return api().get('/'+module+'/'+id)
+        return api(dispatch).get('/'+module+'/'+id)
             .then((json) => {
                 dispatch(receiveRecord(module, json.data))
-                dispatch(ajaxStop())
             }).catch(error => {
-                dispatch(ajaxStop())
                 populateError(error);
             });
     }
@@ -81,13 +75,10 @@ export function fetchMetadata(module)
 {
     return  (dispatch, getState) => {
         if (!getState().metadata.get(module)) {
-            dispatch(ajaxStart())
-            return api().get('/metadata/' + module)
+            return api(dispatch).get('/metadata/' + module)
                 .then((json) => {
                     dispatch(receiveMetadata(module, json.data))
-                    dispatch(ajaxStop())
                 }).catch(error => {
-                    dispatch(ajaxStop())
                     populateError(error);
                 });
         }
@@ -110,12 +101,10 @@ function receiveLogout() {
 export function loginUser(creds) {
     return dispatch => {
         // We dispatch requestLogin to kickoff the call to the API
-        dispatch(ajaxStart());
-        return api(false).post('/auth_user', {
+        return api(dispatch, false).post('/auth_user', {
             'email':creds.email,
             'password':creds.password})
             .then((json) => {
-                dispatch(ajaxStop());
                 const { user, auth_token } = json.data
                 if (!auth_token) {
                     populateError('Something went wrong.');
@@ -127,7 +116,6 @@ export function loginUser(creds) {
                     populateSuccess('Hurraaay! You are logged in.');
                 }
             }).catch((error) => {
-                dispatch(ajaxStop())
                 populateError(error.response.data.errors[0]);
             });
     }
