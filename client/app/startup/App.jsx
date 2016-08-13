@@ -30,7 +30,8 @@ const App = (props, _railsContext) => {
             <Route path="second_page" component={RouterSecondPage} />
             <Route path="modules" component={ModuleContainer}>
                 <Route path=":module" component={ListViewContainer} />
-                  <Route path=":module/:id(/:mode)" component={RecordViewContainer}/>
+                <Route path=":module/add" component={RecordViewContainer}/>
+                <Route path=":module/:id(/:mode)" component={RecordViewContainer}/>
             </Route>
            </Route>
           <Route path="/login" component={LoginContainer}/>

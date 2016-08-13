@@ -8,7 +8,7 @@ export default class Field extends React.Component {
 
     render() {
         const {metadata, value} = this.props;
-        if (this.props.mode == 'edit') {
+        if (this.props.mode == 'edit' || this.props.mode == 'add') {
             return (<label>{metadata.label} <input type="text" onChange={this.handleChange.bind(this)}
                                                    name={metadata.field} {...{value}}/></label>);
         } else {

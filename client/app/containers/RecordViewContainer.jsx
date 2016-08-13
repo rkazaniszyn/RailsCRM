@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 function select(state, props) {
     const record = state.record.get('item').toJS();
-    const metadata = state.metadata.toJS()[props.params.module];
+    const metadata = state.metadata.toJS()[props.params.module] || [];
     return {
         record,
         metadata,
@@ -18,7 +18,10 @@ function select(state, props) {
 class RecordViewContainer extends React.Component {
     static propTypes = {
         record: PropTypes.object.isRequired,
-        metadata: PropTypes.any,
+        metadata: PropTypes.array.isRequired,
+    };
+    static contextTypes = {
+        router: PropTypes.object.isRequired
     };
     constructor(props) {
         super(props);
@@ -28,20 +31,38 @@ class RecordViewContainer extends React.Component {
     }
     componentDidMount() {
         const { params } = this.props;
-        this.props.dispatch(ActionCreators.fetchRecord(params.module, params.id));
+        if (!_.isEmpty(params.id)) {
+            this.props.dispatch(ActionCreators.fetchRecord(params.module, params.id));
+        }
     }
     updateRecord() {
         const { params } = this.props;
-        this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, this.props.record))
+        const { router } = this.context;
+        this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, this.props.record, function() {
+            router.push('/modules/'+params.module);
+        }.bind(this)));
+    }
+    addRecord() {
+        const { params } = this.props;
+        const { router } = this.context;
+        this.props.dispatch(ActionCreators.addRecord(params.module, this.props.record, function(){
+            router.push('/modules/'+params.module);
+        }.bind(this)));
     }
     handleFieldChange(name, value) {
         this.props.dispatch(ActionCreators.updateRecordField(name, value));
     }
     render() {
         const { record, metadata, params } = this.props;
-        const { mode } = this.props.params;
-        if (metadata && !_.isEmpty(record)) {
-            return (<RecordView {...{record, metadata, mode, params}} updateRecord={this.updateRecord.bind(this)} handleFieldChange={this.handleFieldChange.bind(this)}/>);
+        let { mode } = this.props.params;
+        let saveRecord = this.updateRecord;
+        if (/\/add$/.test(this.props.route.path)) {
+            mode = 'add';
+            saveRecord = this.addRecord;
+        }
+
+        if (metadata.length) {
+            return (<RecordView {...{record, metadata, mode, params}} saveRecord={saveRecord.bind(this)} handleFieldChange={this.handleFieldChange.bind(this)}/>);
         }
         return null;
     }

@@ -17,21 +17,18 @@ class ListViewContainer extends React.Component {
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
         records: PropTypes.object.isRequired,
+        onRecordDelete: PropTypes.func.isRequired,
         metadata: PropTypes.any,
     };
-    constructor(props) {
-        super(props);
-        this.actions = bindActionCreators(ActionCreators, props.dispatch)
-
-    }
     componentDidMount() {
-        this.actions.fetchRecords(this.props.params.module);
+        const { dispatch } = this.props;
+        dispatch(ActionCreators.fetchRecords(this.props.params.module));
     }
     render() {
-        const { records, params, metadata } = this.props;
+        const { records, params, metadata, onRecordDelete } = this.props;
         if (metadata) {
             return (
-                <ListView {...{params, metadata, records}}/>
+                <ListView {...{params, metadata, records, onRecordDelete}}/>
             );
         }
         return null;

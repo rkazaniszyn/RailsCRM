@@ -8,7 +8,6 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 const RouterLayout = (props) => {
     const { children } = props;
     return (
-
             <div className="container">
                 <Spinner />
                 <ReduxToastr

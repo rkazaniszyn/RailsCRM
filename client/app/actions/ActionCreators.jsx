@@ -74,13 +74,42 @@ export function fetchRecord(module, id)
     }
 }
 
-export function updateRecord(module, id, data)
+export function updateRecord(module, id, data, callback = function(){})
 {
     return function (dispatch) {
         return api(dispatch).put('/'+module+'/'+id, data)
             .then((json) => {
                 populateSuccess('Record has been updated.');
                 dispatch(receiveRecord(json.data))
+                callback();
+            }).catch(error => {
+                populateError(error);
+            });
+    }
+}
+
+export function addRecord(module, data, callback = function(){})
+{
+    return function (dispatch) {
+        return api(dispatch).post('/'+module, data)
+            .then((json) => {
+                populateSuccess('Record has been created.');
+                dispatch(receiveRecord(json.data));
+                callback();
+            }).catch(error => {
+                populateError(error);
+            });
+    }
+}
+
+export function deleteRecord(module, id, callback = function() {})
+{
+    return function (dispatch) {
+        return api(dispatch).delete('/'+module+'/'+id)
+            .then((json) => {
+                populateSuccess('Record has been deleted.');
+                dispatch(fetchRecords(module));
+                callback();
             }).catch(error => {
                 populateError(error);
             });
