@@ -3,9 +3,11 @@ import ReduxToastr from 'react-redux-toastr';
 import { Spinner } from 'react-redux-spinner';
 
 export default class Login extends React.Component {
+    static propTypes = {
+        onLoginClick: PropTypes.func.isRequired,
+    }
     componentDidMount() {
         document.body.classList.add('signin')
-
     }
     componentWillUnmount() {
         document.body.classList.remove('signin')
@@ -37,8 +39,4 @@ export default class Login extends React.Component {
         const creds = { email: email.value.trim(), password: password.value.trim() }
         this.props.onLoginClick(creds)
     }
-}
-
-Login.propTypes = {
-    onLoginClick: PropTypes.func.isRequired,
 }

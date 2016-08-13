@@ -2,13 +2,6 @@ import api from '../helpers/api';
 import { toastr } from 'react-redux-toastr';
 import { pendingTask, begin, end } from 'react-redux-spinner';
 
-export function updateName(name) {
-    return {
-        type: 'HELLO_WORLD_NAME_UPDATE',
-        name,
-    };
-}
-
 export function ajaxStart() {
     return {
         type: 'AJAX_START',

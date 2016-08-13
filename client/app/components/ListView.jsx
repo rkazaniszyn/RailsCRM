@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import RecordRow from './RecordRow';
 
-export default class RecordsWidget extends React.Component {
+export default class ListView extends React.Component {
     static propTypes = {
         records: PropTypes.object.isRequired,
         metadata: PropTypes.array,

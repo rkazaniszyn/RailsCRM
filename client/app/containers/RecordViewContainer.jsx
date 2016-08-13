@@ -16,6 +16,10 @@ function select(state, props) {
 }
 
 class RecordViewContainer extends React.Component {
+    static propTypes = {
+        record: PropTypes.object.isRequired,
+        metadata: PropTypes.any,
+    };
     constructor(props) {
         super(props);
     }
@@ -41,10 +45,6 @@ class RecordViewContainer extends React.Component {
         }
         return null;
     }
-    static propTypes = {
-        record: PropTypes.object.isRequired,
-        metadata: PropTypes.any,
-    };
 };
 
 export default connect(select)(RecordViewContainer);

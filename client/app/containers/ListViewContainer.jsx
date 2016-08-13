@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import RecordsWidget from '../components/RecordsWidget';
+import ListView from '../components/ListView';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
@@ -13,7 +13,12 @@ function select(state, props) {
     };
 }
 
-class RecordsContainer extends React.Component {
+class ListViewContainer extends React.Component {
+    static propTypes = {
+        dispatch: PropTypes.func.isRequired,
+        records: PropTypes.object.isRequired,
+        metadata: PropTypes.any,
+    };
     constructor(props) {
         super(props);
         this.actions = bindActionCreators(ActionCreators, props.dispatch)
@@ -26,16 +31,11 @@ class RecordsContainer extends React.Component {
         const { records, params, metadata } = this.props;
         if (metadata) {
             return (
-                <RecordsWidget {...{params, metadata, records}}/>
+                <ListView {...{params, metadata, records}}/>
             );
         }
         return null;
 
     }
 };
-RecordsContainer.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    records: PropTypes.object.isRequired,
-    metadata: PropTypes.any,
-};
-export default connect(select)(RecordsContainer);
+export default connect(select)(ListViewContainer);

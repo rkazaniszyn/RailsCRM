@@ -3,6 +3,11 @@ import Field from './Field';
 import { Link } from 'react-router';
 
 export default class RecordView extends React.Component {
+    static propTypes = {
+        updateRecord: PropTypes.func.isRequired,
+        metadata: PropTypes.array.isRequired,
+        record: PropTypes.object.isRequired,
+    };
     handleFormSubmit(e) {
         e.preventDefault();
         this.props.updateRecord();
@@ -25,9 +30,3 @@ export default class RecordView extends React.Component {
         return (<form method="PUT" onSubmit={this.handleFormSubmit.bind(this)}>{buttons}{rows}</form>);
     }
 }
-
-RecordView.propTypes = {
-    updateRecord: PropTypes.func.isRequired,
-    metadata: PropTypes.array.isRequired,
-    record: PropTypes.object.isRequired,
-};
