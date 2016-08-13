@@ -10,19 +10,34 @@ function select(state, props) {
     const metadata = state.metadata.toJS()[props.params.module];
     return {
         record,
-        metadata
+        metadata,
+        ui: state.ui.toJS()
     }
 }
 
 class RecordViewContainer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    componentWillMount() {
+        this.props.dispatch(ActionCreators.resetRecord());
+    }
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(ActionCreators.fetchRecord(this.props.params.module, this.props.params.id));
+        const { params } = this.props;
+        this.props.dispatch(ActionCreators.fetchRecord(params.module, params.id));
+    }
+    updateRecord() {
+        const { params } = this.props;
+        this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, this.props.record))
+    }
+    handleFieldChange(name, value) {
+        this.props.dispatch(ActionCreators.updateRecordField(name, value));
     }
     render() {
-        const { record, metadata } = this.props;
+        const { record, metadata, params } = this.props;
+        const { mode } = this.props.params;
         if (metadata && !_.isEmpty(record)) {
-            return (<RecordView {...{record, metadata}}/>);
+            return (<RecordView {...{record, metadata, mode, params}} updateRecord={this.updateRecord.bind(this)} handleFieldChange={this.handleFieldChange.bind(this)}/>);
         }
         return null;
     }

@@ -22,21 +22,32 @@ export function ajaxStop() {
     }
 }
 
-function receiveRecords(module, json) {
+function receiveRecords(json) {
     return {
         type: 'RECEIVE_RECORDS',
-        module,
         records: json,
-        receivedAt: Date.now()
     }
 }
 
-function receiveRecord(module, json) {
+export function updateRecordField(name, value)
+{
+    return {
+        type: 'UPDATE_FIELD',
+        name,
+        value
+    }
+}
+
+export function resetRecord() {
+    return {
+        type: 'RESET_RECORD',
+    }
+}
+
+function receiveRecord(json) {
     return {
         type: 'RECEIVE_RECORD',
-        module,
         record: json,
-        receivedAt: Date.now()
     }
 }
 
@@ -45,7 +56,6 @@ function receiveMetadata(module, json) {
         type: 'RECEIVE_METADATA',
         module,
         metadata: json,
-        receivedAt: Date.now()
     }
 }
 
@@ -53,7 +63,7 @@ export function fetchRecords(module) {
     return function (dispatch) {
         return api(dispatch).get('/'+module)
             .then((json) => {
-                dispatch(receiveRecords(module, json.data))
+                dispatch(receiveRecords(json.data))
             }).catch(error => {
                 populateError(error);
             });
@@ -64,7 +74,20 @@ export function fetchRecord(module, id)
     return function (dispatch) {
         return api(dispatch).get('/'+module+'/'+id)
             .then((json) => {
-                dispatch(receiveRecord(module, json.data))
+                dispatch(receiveRecord(json.data))
+            }).catch(error => {
+                populateError(error);
+            });
+    }
+}
+
+export function updateRecord(module, id, data)
+{
+    return function (dispatch) {
+        return api(dispatch).put('/'+module+'/'+id, data)
+            .then((json) => {
+                populateSuccess('Record has been updated.');
+                dispatch(receiveRecord(json.data))
             }).catch(error => {
                 populateError(error);
             });
@@ -105,7 +128,7 @@ export function loginUser(creds) {
             'email':creds.email,
             'password':creds.password})
             .then((json) => {
-                const { user, auth_token } = json.data
+                const { user, auth_token } = json.data;
                 if (!auth_token) {
                     populateError('Something went wrong.');
                 } else {

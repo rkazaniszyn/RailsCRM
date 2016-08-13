@@ -1,10 +1,18 @@
 import React from 'react'
 
-export default (props) => {
-    const { field } = props;
-    if (props.isEdited) {
-        return (<label>{field.label}<input {...{field}}/></label>);
-    } else {
-        return (<span>{field.label}: {field.value}</span>);
+export default class Field extends React.Component {
+    handleChange(event) {
+        const text = event.target.value
+        this.props.handleFieldChange(this.props.metadata.field, text);
+    }
+
+    render() {
+        const {metadata, value} = this.props;
+        if (this.props.mode == 'edit') {
+            return (<label>{metadata.label} <input type="text" onChange={this.handleChange.bind(this)}
+                                                   name={metadata.field} {...{value}}/></label>);
+        } else {
+            return (<span>{metadata.label}: {this.props.value}</span>);
+        }
     }
 }

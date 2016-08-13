@@ -1,11 +1,6 @@
-class Api::V1::ContactsController < Api::V1::ApiController
-  before_filter :authenticate_request!
-  def index
-    @contacts = Contact.all
-    render json: @contacts
-  end
-  def show
-    @contact = Contact.find(params[:id])
-    render json: @contact
+class Api::V1::ContactsController < Api::V1::ModuleController
+  MODEL = 'Contact'
+  def module_params
+    params.permit(:first_name, :last_name, :email_address, :birthdate)
   end
 end
