@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import ReactOnRails from 'react-on-rails';
 import { Provider } from 'react-redux';
@@ -7,6 +7,7 @@ import createStore from '../store/Store';
 import LayoutContainer from '../containers/LayoutContainer';
 import RouterFirstPage from '../components/RouterFirstPage';
 import RouterSecondPage from '../components/RouterSecondPage';
+import Dashboard from '../containers/DashboardContainer';
 import ListViewContainer from '../containers/ListViewContainer';
 import RecordViewContainer from '../containers/RecordViewContainer';
 import AuthenticationDecorator from '../containers/AuthenticationDecorator';
@@ -26,6 +27,7 @@ const App = (props, _railsContext) => {
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={AuthenticationDecorator(LayoutContainer)}>
+            <IndexRoute component={Dashboard} />
             <Route path="first_page" component={RouterFirstPage} />
             <Route path="second_page" component={RouterSecondPage} />
             <Route path="modules" component={ModuleContainer}>

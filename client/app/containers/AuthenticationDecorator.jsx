@@ -11,7 +11,6 @@ export default (ChildComponent) => {
             router: PropTypes.object.isRequired
         };
         componentWillMount() {
-            console.log(this.props.user);
             const { router } = this.context;
             if (!this.props.user.isAuthenticated) {
                 router.push('/login');
@@ -19,7 +18,6 @@ export default (ChildComponent) => {
         }
         componentWillReceiveProps(newProps)
         {
-            console.log(this.props.user);
             const { router } = this.context;
             if (newProps.user.isAuthenticated == false) {
                 router.push('/login');

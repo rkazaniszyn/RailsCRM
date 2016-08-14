@@ -3,6 +3,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
+import AppBar from 'material-ui/AppBar';
 
 export default class MenuDrawer extends React.Component {
     render() {
@@ -14,9 +15,10 @@ export default class MenuDrawer extends React.Component {
                     onTouchTap={this.handleToggle}
                 />
                 <Drawer open={open}>
-                    <Link to="/first_page"><MenuItem>Router First Example Page</MenuItem></Link>
-                    <Link to="/second_page"><MenuItem>Second Page</MenuItem></Link>
-                    <Link to="/modules/Contacts"><MenuItem>Records</MenuItem></Link>
+                    <AppBar style={{height:'56px'}} showMenuIconButton={false} title="Menu" />
+                    <Link activeClassName="active" to="/first_page"><MenuItem>Router First Example Page</MenuItem></Link>
+                    <Link activeClassName="active" to="/second_page"><MenuItem>Second Page</MenuItem></Link>
+                    <Link activeClassName="active" to="/modules/Contacts"><MenuItem>Records</MenuItem></Link>
                 </Drawer>
             </div>
         );
