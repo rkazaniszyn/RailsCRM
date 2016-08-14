@@ -1,16 +1,39 @@
 import React, { PropTypes } from 'react';
 import Field from './Field';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class RecordView extends React.Component {
     static propTypes = {
         saveRecord: PropTypes.func.isRequired,
         metadata: PropTypes.array.isRequired,
         record: PropTypes.object.isRequired,
+        onRecordDelete: PropTypes.func.isRequired,
+    };
+    static contextTypes = {
+        router: PropTypes.object.isRequired,
     };
     handleFormSubmit(e) {
         e.preventDefault();
         this.props.saveRecord();
+    }
+    onCancelClick(e) {
+        e.preventDefault();
+        let urlPrefix = '/modules/'+this.props.params.module;
+        if (this.props.mode == 'edit') {
+            this.context.router.push(urlPrefix+'/'+this.props.params.id);
+        } else if (this.props.mode == 'add') {
+            this.context.router.push(urlPrefix);
+        }
+    }
+    onEditClick(e) {
+        e.preventDefault();
+        let urlPrefix = '/modules/'+this.props.params.module;
+        this.context.router.push(urlPrefix+'/'+this.props.params.id+'/edit');
+    }
+    onDeleteClick(e) {
+        e.preventDefault();
+        this.props.onRecordDelete(this.props.params.module, this.props.params.id);
     }
     render() {
         const { metadata, mode, record, params } = this.props;
@@ -21,15 +44,16 @@ export default class RecordView extends React.Component {
             rows.push(<div key={metadata[i].id}><Field {...{ mode, handleFieldChange, value}} metadata={metadata[i]}/></div>);
         }
         let buttons = [];
-        let urlPrefix = '/modules/'+params.module;
-        if (this.props.mode == 'edit') {
-            buttons.push(<Link key="cancel" to={urlPrefix+'/'+params.id}>Cancel</Link>);
-            buttons.push(<input key="submit" type="submit" value="Update"/>);
-        } else if (this.props.mode == 'add') {
-            buttons.push(<Link key="cancel" to={urlPrefix}>Cancel</Link>);
-            buttons.push(<input key="submit" type="submit" value="Save"/>);
+        if (this.props.mode == 'edit' || this.props.mode == 'add') {
+            let label = 'Update Record';
+            if (this.props.mode == 'add') {
+                label = 'Create Record';
+            }
+            buttons.push(<RaisedButton type="submit" key="submit" label={label} primary={true}/>);
+            buttons.push(<RaisedButton onTouchTap={this.onCancelClick.bind(this)} key="cancel" label="Cancel"/>);
         } else {
-            buttons.push(<Link key="edit" to={urlPrefix+'/'+params.id+'/edit'}>Edit</Link>);
+            buttons.push(<RaisedButton onTouchTap={this.onEditClick.bind(this)} key="edit" label="Edit"/>);
+            buttons.push(<RaisedButton onTouchTap={this.onDeleteClick.bind(this)} key="delete" label="Delete Record" secondary={true}/>);
         }
         return (<form onSubmit={this.handleFormSubmit.bind(this)}>{buttons}{rows}</form>);
     }

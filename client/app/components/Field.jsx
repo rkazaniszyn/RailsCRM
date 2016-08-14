@@ -25,7 +25,7 @@ export default class Field extends React.Component {
                     } else {
                         var date = null
                     }
-                    return (<DatePicker floatingLabelText={metadata.label}
+                    return (<DatePicker autoOk={true} floatingLabelText={metadata.label}
                         value={date}
                         onChange={this.handleDateChange.bind(this)} />)
                 default:

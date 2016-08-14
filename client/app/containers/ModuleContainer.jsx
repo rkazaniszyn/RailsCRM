@@ -4,6 +4,9 @@ import * as ActionCreators from '../actions/ActionCreators';
 import {toastr} from 'react-redux-toastr'
 
 class ModuleContainer extends React.Component {
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired,
+    }
     componentWillReceiveProps(nextProps) {
         if (this.props.params.module !== nextProps.params.module) {
             const { dispatch } = this.props;
@@ -14,11 +17,13 @@ class ModuleContainer extends React.Component {
         const { dispatch } = this.props;
         dispatch(ActionCreators.fetchMetadata(this.props.params.module));
     }
-    onRecordDelete(module, id) {
+    onRecordDelete(module, id) {3
         const { dispatch } = this.props;
+        var self = this;
         const toastrConfirmOptions = {
             onOk: () => {
                 dispatch(ActionCreators.deleteRecord(module, id));
+                self.context.router.push('/modules/'+module);
             },
             onCancel: () => true
         };

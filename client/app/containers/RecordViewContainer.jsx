@@ -19,6 +19,7 @@ class RecordViewContainer extends React.Component {
     static propTypes = {
         record: PropTypes.object.isRequired,
         metadata: PropTypes.array.isRequired,
+        onRecordDelete: PropTypes.func.isRequired,
     };
     static contextTypes = {
         router: PropTypes.object.isRequired
@@ -53,7 +54,7 @@ class RecordViewContainer extends React.Component {
         this.props.dispatch(ActionCreators.updateRecordField(name, value));
     }
     render() {
-        const { record, metadata, params } = this.props;
+        const { record, metadata, params, onRecordDelete } = this.props;
         let { mode } = this.props.params;
         let saveRecord = this.updateRecord;
         if (/\/add$/.test(this.props.route.path)) {
@@ -62,7 +63,7 @@ class RecordViewContainer extends React.Component {
         }
 
         if (metadata.length) {
-            return (<RecordView {...{record, metadata, mode, params}} saveRecord={saveRecord.bind(this)} handleFieldChange={this.handleFieldChange.bind(this)}/>);
+            return (<RecordView {...{record, metadata, mode, params, onRecordDelete}} saveRecord={saveRecord.bind(this)} handleFieldChange={this.handleFieldChange.bind(this)}/>);
         }
         return null;
     }

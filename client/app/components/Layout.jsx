@@ -4,10 +4,6 @@ import ReduxToastr from 'react-redux-toastr';
 import { Spinner } from 'react-redux-spinner';
 import HeaderToolbar from './HeaderToolbar';
 import MenuDrawer from './MenuDrawer';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
 
 const Layout = (props) => {
     const { children } = props;
