@@ -4,9 +4,10 @@ import * as ActionCreators from '../actions/ActionCreators';
 import { PropTypes } from 'react';
 import RecordView from '../components/RecordView';
 import _ from 'lodash';
+import validateRecord from '../helpers/validation';
 
 function select(state, props) {
-    const record = state.record.get('item').toJS();
+    const record = state.record.toJS();
     const metadata = state.metadata.toJS()[props.params.module] || [];
     return {
         record,
@@ -37,18 +38,28 @@ class RecordViewContainer extends React.Component {
         }
     }
     updateRecord() {
-        const { params } = this.props;
+        const { params, metadata, record } = this.props;
         const { router } = this.context;
-        this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, this.props.record, function() {
-            router.push('/modules/'+params.module);
-        }.bind(this)));
+        const errors = validateRecord(record.item, metadata);
+        if (errors.length) {
+            this.props.dispatch(ActionCreators.populateValidationErrors(errors));
+        } else {
+            this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, record, function() {
+                router.push('/modules/'+params.module);
+            }.bind(this)));
+        }
     }
     addRecord() {
-        const { params } = this.props;
+        const { params, metadata, record } = this.props;
         const { router } = this.context;
-        this.props.dispatch(ActionCreators.addRecord(params.module, this.props.record, function(){
-            router.push('/modules/'+params.module);
-        }.bind(this)));
+        const errors = validateRecord(record.item, metadata);
+        if (errors.length) {
+            this.props.dispatch(ActionCreators.populateValidationErrors(errors));
+        } else {
+            this.props.dispatch(ActionCreators.addRecord(params.module, record.item, function () {
+                router.push('/modules/' + params.module);
+            }.bind(this)));
+        }
     }
     handleFieldChange(name, value) {
         this.props.dispatch(ActionCreators.updateRecordField(name, value));

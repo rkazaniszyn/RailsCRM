@@ -45,6 +45,13 @@ function receiveRecord(json) {
     }
 }
 
+export function populateValidationErrors(validationErrors) {
+    return {
+        type: 'POPULATE_VALIDATION_ERRORS',
+        validationErrors
+    }
+}
+
 function receiveUser(data) {
     return {
         type: 'RECEIVE_USER',

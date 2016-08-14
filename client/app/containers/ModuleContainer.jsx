@@ -17,7 +17,7 @@ class ModuleContainer extends React.Component {
         const { dispatch } = this.props;
         dispatch(ActionCreators.fetchMetadata(this.props.params.module));
     }
-    onRecordDelete(module, id) {3
+    onRecordDelete(module, id) {
         const { dispatch } = this.props;
         var self = this;
         const toastrConfirmOptions = {

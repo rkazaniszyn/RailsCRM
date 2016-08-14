@@ -29,8 +29,7 @@ export default class Field extends React.Component {
                         value={date}
                         onChange={this.handleDateChange.bind(this)} />)
                 default:
-                    let errorText = 'required';
-                    return (<TextField errorText={errorText} floatingLabelText={metadata.label}
+                    return (<TextField errorText={this.props.error} floatingLabelText={metadata.label}
                                         value={value}
                                         onChange={this.handleChange.bind(this)} />)
             }

@@ -36,12 +36,19 @@ export default class RecordView extends React.Component {
         this.props.onRecordDelete(this.props.params.module, this.props.params.id);
     }
     render() {
-        const { metadata, mode, record, params } = this.props;
+        const { metadata, mode, record } = this.props;
         const handleFieldChange = this.props.handleFieldChange;
         var rows = [];
         for (let i = 0; i < metadata.length; i++) {
-            let value = record[metadata[i].field] || '';
-            rows.push(<div key={metadata[i].id}><Field {...{ mode, handleFieldChange, value}} metadata={metadata[i]}/></div>);
+            let value = record.item[metadata[i].field] || '';
+            let error = false;
+            for (let z = 0; z < record.validationErrors.length; z++) {
+                if (record.validationErrors[z].field == metadata[i].field) {
+                    error = record.validationErrors[z].error;
+                    break;
+                }
+            }
+            rows.push(<div key={metadata[i].id}><Field {...{ mode, handleFieldChange, value, error}} metadata={metadata[i]}/></div>);
         }
         let buttons = [];
         if (this.props.mode == 'edit' || this.props.mode == 'add') {
