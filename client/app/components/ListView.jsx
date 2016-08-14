@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import RecordRow from './RecordRow';
 import { Link } from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class ListView extends React.Component {
     static propTypes = {
@@ -9,6 +11,12 @@ export default class ListView extends React.Component {
         metadata: PropTypes.array,
         onRecordDelete: PropTypes.func.isRequired,
     };
+    static contextTypes = {
+        router: PropTypes.object.isRequired
+    };
+    onAddClicked(event) {
+        this.context.router.push('/modules/'+this.props.params.module+'/add');
+    }
     render() {
         const  { items } = this.props.records;
         const { params, metadata, onRecordDelete } = this.props;
@@ -23,14 +31,16 @@ export default class ListView extends React.Component {
         const showCheckboxes = false;
         return (
             <div>
-                <Link to={'/modules/'+params.module+'/add'}>Add new record</Link>
+                <FloatingActionButton onTouchTap={this.onAddClicked.bind(this)}>
+                    <ContentAdd/>
+                </FloatingActionButton>
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={showCheckboxes}
                                  adjustForCheckbox={showCheckboxes}>
                         <TableRow>
                             <TableHeaderColumn>ID</TableHeaderColumn>
                             {header}
-                            <TableHeaderColumn colSpan="2">Operations</TableHeaderColumn>
+                            <TableHeaderColumn>Operations</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={showCheckboxes}>
