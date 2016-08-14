@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 class RecordRow extends React.Component {
     static propTypes = {
@@ -16,14 +17,15 @@ class RecordRow extends React.Component {
         const editUrl = '/modules/'+this.props.params.module+'/'+record.id;
         var cols = [];
         for (let i = 0; i < metadata.length; i++) {
-            cols.push(<td key={metadata[i].id}>{record[metadata[i].field]}</td>);
+            cols.push(<TableRowColumn key={metadata[i].id}>{record[metadata[i].field]}</TableRowColumn>);
         }
         return(
-            <tr>
+            <TableRow>
+                <TableRowColumn>{record.id}</TableRowColumn>
                 {cols}
-                <td><Link to={editUrl}>Edit</Link></td>
-                <td><a href="#" onClick={this.onDeleteClicked.bind(this)}>Delete</a></td>
-            </tr>
+                <TableRowColumn><Link to={editUrl}>Edit</Link></TableRowColumn>
+                <TableRowColumn><a href="#" onClick={this.onDeleteClicked.bind(this)}>Delete</a></TableRowColumn>
+            </TableRow>
         )
     }
 };

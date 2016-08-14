@@ -1,6 +1,7 @@
 import api from '../helpers/api';
 import { toastr } from 'react-redux-toastr';
 import { pendingTask, begin, end } from 'react-redux-spinner';
+import _ from 'lodash';
 
 export function ajaxStart() {
     return {
@@ -41,6 +42,13 @@ function receiveRecord(json) {
     return {
         type: 'RECEIVE_RECORD',
         record: json,
+    }
+}
+
+function receiveUser(data) {
+    return {
+        type: 'RECEIVE_USER',
+        data: data
     }
 }
 
@@ -130,6 +138,20 @@ export function fetchMetadata(module)
     }
 }
 
+export function fetchCurrentUser()
+{
+    return  (dispatch, getState) => {
+        if (_.isEmpty(getState().user.get('data').toJS())) {
+            return api(dispatch).get('/me')
+                .then((json) => {
+                    dispatch(receiveUser(json.data))
+                }).catch(error => {
+                    populateError(error);
+                });
+        }
+    }
+}
+
 function receiveLogin(user) {
     return {
         type: 'LOGIN_SUCCESS',
@@ -176,9 +198,9 @@ export function logoutUser() {
 }
 
 function populateError(error) {
-    toastr.error('The title', error);
+    toastr.error('Error', error);
 }
 
 function populateSuccess(message) {
-    toastr.success('The title', message);
+    toastr.success('Success', message);
 }

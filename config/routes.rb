@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :Contacts, controller: :contacts
       get '/metadata/:module', to: 'metadata#search'
       post '/auth_user', to: 'authentication#authenticate_user'
+      get '/me', to: 'users#get_user'
     end
   end
   match '*path', to: 'page#index', via: [:get]

@@ -22,7 +22,7 @@ class ModuleContainer extends React.Component {
             },
             onCancel: () => true
         };
-        toastr.confirm('Are you sure about that!', toastrConfirmOptions)
+        toastr.confirm('Are you sure you want to delete this record?', toastrConfirmOptions)
     }
     render() {
         //add props to all children

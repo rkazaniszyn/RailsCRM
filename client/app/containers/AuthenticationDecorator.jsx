@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Login from '../components/Login';
+import { fetchCurrentUser } from '../actions/ActionCreators';
 
 export default (ChildComponent) => {
-    class AuthenticatedComponent extends React.Component {
+    class AuthenticationDecorator extends React.Component {
         static propTypes = {
             user: PropTypes.object.isRequired
         };
@@ -11,10 +11,22 @@ export default (ChildComponent) => {
             router: PropTypes.object.isRequired
         };
         componentWillMount() {
+            console.log(this.props.user);
             const { router } = this.context;
             if (!this.props.user.isAuthenticated) {
                 router.push('/login');
             }
+        }
+        componentWillReceiveProps(newProps)
+        {
+            console.log(this.props.user);
+            const { router } = this.context;
+            if (newProps.user.isAuthenticated == false) {
+                router.push('/login');
+            }
+        }
+        componentDidMount() {
+            this.props.dispatch(fetchCurrentUser());
         }
         render () {
             //user.isLoggedIn
@@ -23,8 +35,8 @@ export default (ChildComponent) => {
     }
 
     function select(state) {
-        return {user:state.user.toJS()}
+        return {user: state.user.toJS()}
     }
 
-    return connect(select)(AuthenticatedComponent)
+    return connect(select)(AuthenticationDecorator)
 }
