@@ -18,9 +18,17 @@ class LayoutContainer extends React.Component {
         user: React.PropTypes.object.isRequired,
         metadata: React.PropTypes.object.isRequired,
     };
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired,
+    };
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(ActionCreators.fetchMetadata());
+    }
+    componentWillReceiveProps(newProps) {
+        if (this.props.ui.errorPage !== newProps.ui.errorPage && newProps.ui.errorPage == 1) {
+            this.context.router.push('/error')
+        }
     }
     render() {
         const { user, children, ui, metadata } = this.props;

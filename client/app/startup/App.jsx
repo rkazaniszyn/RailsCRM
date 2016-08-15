@@ -14,6 +14,7 @@ import AuthenticationDecorator from '../containers/AuthenticationDecorator';
 import ModuleContainer from '../containers/ModuleContainer';
 import LoginContainer from '../containers/LoginContainer';
 import NotFoundRoute from '../components/NotFoundRoute';
+import ErrorPageContainer from '../containers/ErrorPageContainer';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -35,6 +36,7 @@ const App = (props, _railsContext) => {
                 <Route path=":module/add" component={RecordViewContainer}/>
                 <Route path=":module/:id(/:mode)" component={RecordViewContainer}/>
             </Route>
+            <Route path="/error" component={ErrorPageContainer}/>
            </Route>
           <Route path="/login" component={LoginContainer}/>
           <Route path="*" component={NotFoundRoute} />

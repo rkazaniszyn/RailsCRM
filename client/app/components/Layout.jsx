@@ -5,27 +5,29 @@ import { Spinner } from 'react-redux-spinner';
 import HeaderToolbar from './HeaderToolbar';
 import MenuDrawer from './MenuDrawer';
 
-const Layout = (props) => {
-    const { children, metadata } = props;
-    return (
-        <div>
-            <Spinner />
-            <ReduxToastr
-                timeOut={2000}
-                newestOnTop={false}
-                position="top-left"/>
+class Layout extends React.Component {
+    render() {
+        const { children, metadata } = this.props;
+        return (
+            <div>
+                <Spinner />
+                <ReduxToastr
+                    timeOut={2000}
+                    newestOnTop={false}
+                    position="top-left"/>
 
-            <div style={{paddingLeft: '256px'}}>
-                <HeaderToolbar {...props} />
-                <div style={{paddingTop: "64px", minHeight: '400px'}}>
-                    <div style={{margin: '48px 72px'}}>
-                    {children}
+                <div style={{paddingLeft: '256px'}}>
+                    <HeaderToolbar {...this.props} />
+                    <div style={{paddingTop: "64px", minHeight: '400px'}}>
+                        <div style={{margin: '48px 72px'}}>
+                            {children}
+                        </div>
                     </div>
                 </div>
+                <MenuDrawer {...{metadata}} />
             </div>
-            <MenuDrawer {...{metadata}} />
-        </div>
-    );
+        );
+    }
 };
 
 Layout.propTypes = {

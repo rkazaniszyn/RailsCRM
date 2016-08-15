@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-export default function uiReducer(state = Immutable.fromJS({ ajax: {isFetching: false}}), action) {
+export default function uiReducer(state = Immutable.fromJS({ ajax: {isFetching: false}, errorPage:false}), action) {
     switch (action.type) {
         case 'AJAX_START':
             return state.mergeDeep({
@@ -12,6 +12,10 @@ export default function uiReducer(state = Immutable.fromJS({ ajax: {isFetching: 
                 ajax: {
                     isFetching: false,
                 }
+            });
+        case 'ERROR_PAGE':
+            return state.merge({
+                errorPage: action.errorPage
             });
         default:
             return state

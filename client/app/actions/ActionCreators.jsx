@@ -79,6 +79,7 @@ export function fetchRecords(module) {
                 dispatch(receiveRecords(json.data))
             }).catch(error => {
                 populateError(error);
+                dispatch(showHideErrorPage(1))
             });
     }
 }
@@ -90,6 +91,7 @@ export function fetchRecord(module, id)
                 dispatch(receiveRecord(json.data))
             }).catch(error => {
                 populateError(error);
+                dispatch(showHideErrorPage(1))
             });
     }
 }
@@ -104,6 +106,7 @@ export function updateRecord(module, id, data, callback = function(){})
                 callback();
             }).catch(error => {
                 populateError(error);
+                dispatch(showHideErrorPage(1))
             });
     }
 }
@@ -118,6 +121,7 @@ export function addRecord(module, data, callback = function(){})
                 callback();
             }).catch(error => {
                 populateError(error);
+                dispatch(showHideErrorPage(1))
             });
     }
 }
@@ -132,6 +136,7 @@ export function deleteRecord(module, id, callback = function() {})
                 callback();
             }).catch(error => {
                 populateError(error);
+                dispatch(showHideErrorPage(1))
             });
     }
 }
@@ -139,7 +144,6 @@ export function deleteRecord(module, id, callback = function() {})
 export function fetchMetadata()
 {
     return  (dispatch, getState) => {
-        console.log(getState().metadata.get('modules_list').size);
         if (!getState().metadata.get('modules_list').size) {
             return api(dispatch).get('/metadata/all')
                 .then((json) => {
@@ -178,9 +182,10 @@ function receiveLogout() {
     }
 }
 
-function showErrorPage() {
+export function showHideErrorPage(errorPage = 0) {
     return {
-        type: 'ERROR_PAGE'
+        type: 'ERROR_PAGE',
+        errorPage
     }
 }
 

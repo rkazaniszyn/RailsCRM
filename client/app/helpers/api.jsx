@@ -30,7 +30,6 @@ export default function api(dispatch = false, authenticated = true) {
             dispatch(ajaxStop());
             return response;
         }, function (error) {
-            console.log(error);
             dispatch(ajaxStop());
             return Promise.reject(error);
         });
