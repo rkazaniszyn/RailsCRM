@@ -5,6 +5,10 @@ export default function recordsReducer(state = Immutable.fromJS({items:[]}), act
             return state.merge({
                 items: action.records
             })
+        case 'RESET_LIST':
+            return state.merge({
+                items:[]
+            })
         default:
             return state
     }

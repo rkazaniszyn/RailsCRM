@@ -6,7 +6,7 @@ import HeaderToolbar from './HeaderToolbar';
 import MenuDrawer from './MenuDrawer';
 
 const Layout = (props) => {
-    const { children } = props;
+    const { children, metadata } = props;
     return (
         <div>
             <Spinner />
@@ -23,7 +23,7 @@ const Layout = (props) => {
                     </div>
                 </div>
             </div>
-            <MenuDrawer />
+            <MenuDrawer {...{metadata}} />
         </div>
     );
 };
@@ -31,6 +31,7 @@ const Layout = (props) => {
 Layout.propTypes = {
     children: React.PropTypes.object,
     logoutUser: React.PropTypes.func.isRequired,
+    metadata: React.PropTypes. object.isRequired,
 };
 
 export default Layout;

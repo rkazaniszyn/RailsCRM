@@ -31,6 +31,7 @@ export default class ListView extends React.Component {
         const showCheckboxes = false;
         return (
             <div>
+                <h1>{params.module}</h1>
                 <FloatingActionButton onTouchTap={this.onAddClicked.bind(this)}>
                     <ContentAdd/>
                 </FloatingActionButton>

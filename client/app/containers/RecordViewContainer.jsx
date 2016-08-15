@@ -8,7 +8,7 @@ import validateRecord from '../helpers/validation';
 
 function select(state, props) {
     const record = state.record.toJS();
-    const metadata = state.metadata.toJS()[props.params.module] || [];
+    const metadata = state.metadata.get('modules').toJS()[props.params.module] || []
     return {
         record,
         metadata,
@@ -44,7 +44,7 @@ class RecordViewContainer extends React.Component {
         if (errors.length) {
             this.props.dispatch(ActionCreators.populateValidationErrors(errors));
         } else {
-            this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, record, function() {
+            this.props.dispatch(ActionCreators.updateRecord(params.module, params.id, record.item, function() {
                 router.push('/modules/'+params.module);
             }.bind(this)));
         }

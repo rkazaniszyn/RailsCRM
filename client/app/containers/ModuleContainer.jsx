@@ -7,16 +7,6 @@ class ModuleContainer extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired,
     }
-    componentWillReceiveProps(nextProps) {
-        if (this.props.params.module !== nextProps.params.module) {
-            const { dispatch } = this.props;
-            dispatch(ActionCreators.fetchMetadata(this.props.params.module));
-        }
-    }
-    componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(ActionCreators.fetchMetadata(this.props.params.module));
-    }
     onRecordDelete(module, id) {
         const { dispatch } = this.props;
         var self = this;

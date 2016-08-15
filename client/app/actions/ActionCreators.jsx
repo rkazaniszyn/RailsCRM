@@ -38,6 +38,12 @@ export function resetRecord() {
     }
 }
 
+export function resetList() {
+    return {
+        type: 'RESET_LIST',
+    }
+}
+
 function receiveRecord(json) {
     return {
         type: 'RECEIVE_RECORD',
@@ -59,10 +65,9 @@ function receiveUser(data) {
     }
 }
 
-function receiveMetadata(module, json) {
+function receiveMetadata(json) {
     return {
         type: 'RECEIVE_METADATA',
-        module,
         metadata: json,
     }
 }
@@ -131,13 +136,14 @@ export function deleteRecord(module, id, callback = function() {})
     }
 }
 
-export function fetchMetadata(module)
+export function fetchMetadata()
 {
     return  (dispatch, getState) => {
-        if (!getState().metadata.get(module)) {
-            return api(dispatch).get('/metadata/' + module)
+        console.log(getState().metadata.get('modules_list').size);
+        if (!getState().metadata.get('modules_list').size) {
+            return api(dispatch).get('/metadata/all')
                 .then((json) => {
-                    dispatch(receiveMetadata(module, json.data))
+                    dispatch(receiveMetadata(json.data))
                 }).catch(error => {
                     populateError(error);
                 });

@@ -8,4 +8,15 @@ class Api::V1::MetadataController < Api::V1::ApiController
     end
     render json: @contacts
   end
+  def all
+    meta = Metadatum.order(:order).all
+    modules_data = {}
+    meta.each do |record|
+      if !modules_data.key?(record.module)
+        modules_data[record.module] = []
+      end
+      modules_data[record.module].push record
+    end
+    render json: {modules_list: [:Accounts, :Contacts], modules: modules_data}
+  end
 end

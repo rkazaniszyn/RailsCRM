@@ -5,22 +5,28 @@ import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../actions/ActionCreators';
 
 function select(state) {
-
     return {
         ui: state.ui.toJS(),
+        metadata: state.metadata.toJS()
     }
 }
 
 class LayoutContainer extends React.Component {
+
     static propTypes = {
         ui: React.PropTypes.object.isRequired,
         user: React.PropTypes.object.isRequired,
+        metadata: React.PropTypes.object.isRequired,
     };
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(ActionCreators.fetchMetadata());
+    }
     render() {
-        const { user, children, ui } = this.props;
+        const { user, children, ui, metadata } = this.props;
         //bind logoutUser with dispatch so that child components are not aware of redux
         const logoutUser = bindActionCreators(ActionCreators.logoutUser, this.props.dispatch);
-        return (<Layout {...{ user, children, ui, logoutUser}}/>);
+        return (<Layout {...{ user, children, ui, logoutUser, metadata}}/>);
     }
 };
 
