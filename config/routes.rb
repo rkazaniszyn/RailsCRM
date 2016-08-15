@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get '/metadata/:module', to: 'metadata#search'
       post '/auth_user', to: 'authentication#authenticate_user'
       get '/me', to: 'users#get_user'
+
+      match '*path', to: 'api#not_found', via: [:get, :post, :put, :delete]
     end
   end
   match '*path', to: 'page#index', via: [:get]

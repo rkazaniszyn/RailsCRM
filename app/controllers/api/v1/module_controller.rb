@@ -1,4 +1,5 @@
 class Api::V1::ModuleController < Api::V1::ApiController
+  rescue_from ::ActiveRecord::RecordNotFound, :with => :record_not_found
   before_filter :authenticate_request!
   def index
     records = model_name.constantize.all
@@ -23,6 +24,9 @@ class Api::V1::ModuleController < Api::V1::ApiController
     record.destroy
     response = [status: 'ok']
     render json: response
+  end
+  def record_not_found
+    render json: {errors: ['Record not found']}, status: 404
   end
   def module_params
     params

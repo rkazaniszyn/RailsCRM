@@ -7,9 +7,6 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
       render json: {errors: ['Invalid Username/Password']}, status: :unauthorized
     end
   end
-  def get_user
-
-  end
 
   private
 

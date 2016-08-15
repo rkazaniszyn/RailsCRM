@@ -178,6 +178,12 @@ function receiveLogout() {
     }
 }
 
+function showErrorPage() {
+    return {
+        type: 'ERROR_PAGE'
+    }
+}
+
 export function loginUser(creds) {
     return dispatch => {
         // We dispatch requestLogin to kickoff the call to the API
@@ -196,7 +202,7 @@ export function loginUser(creds) {
                     populateSuccess('Hurraaay! You are logged in.');
                 }
             }).catch((error) => {
-                populateError(error.response.data.errors[0]);
+                populateError(error);
             });
     }
 }
@@ -211,7 +217,8 @@ export function logoutUser() {
 }
 
 function populateError(error) {
-    toastr.error('Error', error);
+    let msg = error.response.data.errors[0] || error;
+    toastr.error('Error', msg);
 }
 
 function populateSuccess(message) {
