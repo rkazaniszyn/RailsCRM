@@ -48,7 +48,11 @@ export default class RecordView extends React.Component {
                     break;
                 }
             }
-            rows.push(<div key={metadata[i].id}><Field {...{ mode, handleFieldChange, value, error}} metadata={metadata[i]}/></div>);
+            rows.push(
+                <div style={{marginBottom:'10px'}} key={metadata[i].id}>
+                <Field {...{ mode, handleFieldChange, value, error}} metadata={metadata[i]}/>
+                </div>
+            );
         }
         let buttons = [];
         if (this.props.mode == 'edit' || this.props.mode == 'add') {
@@ -56,12 +60,17 @@ export default class RecordView extends React.Component {
             if (this.props.mode == 'add') {
                 label = 'Create Record';
             }
-            buttons.push(<RaisedButton type="submit" key="submit" label={label} primary={true}/>);
             buttons.push(<RaisedButton onTouchTap={this.onCancelClick.bind(this)} key="cancel" label="Cancel"/>);
+            buttons.push(<RaisedButton style={{marginLeft:'10px'}} type="submit" key="submit" label={label} primary={true}/>);
         } else {
             buttons.push(<RaisedButton onTouchTap={this.onEditClick.bind(this)} key="edit" label="Edit"/>);
-            buttons.push(<RaisedButton onTouchTap={this.onDeleteClick.bind(this)} key="delete" label="Delete Record" secondary={true}/>);
+            buttons.push(<RaisedButton style={{marginLeft:'10px'}} onTouchTap={this.onDeleteClick.bind(this)} key="delete" label="Delete Record" secondary={true}/>);
         }
-        return (<form onSubmit={this.handleFormSubmit.bind(this)}>{buttons}{rows}</form>);
+        return (
+            <form onSubmit={this.handleFormSubmit.bind(this)}>
+            <div style={{marginBottom:'20px'}}>{buttons}</div>
+            {rows}
+            </form>
+        );
     }
 }

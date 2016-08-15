@@ -15,6 +15,7 @@ class Api::V1::MetadataController < Api::V1::ApiController
       if !modules_data.key?(record.module)
         modules_data[record.module] = []
       end
+      record.label = I18n.t record.label
       modules_data[record.module].push record
     end
     render json: {modules_list: [:Accounts, :Contacts], modules: modules_data}
