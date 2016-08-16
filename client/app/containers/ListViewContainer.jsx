@@ -29,6 +29,7 @@ class ListViewContainer extends React.Component {
     componentWillReceiveProps(newProps) {
         const { dispatch } = this.props;
         if (this.props.params.module !== newProps.params.module) {
+            this.props.dispatch(ActionCreators.resetList());
             dispatch(ActionCreators.fetchRecords(newProps.params.module));
         }
     }

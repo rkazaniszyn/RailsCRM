@@ -1,20 +1,17 @@
 import app_config from '../config';
 import axios from 'axios';
-import { ajaxStart, ajaxStop } from '../actions/ActionCreators';
+import { ajaxStart, ajaxStop, showHideErrorPage, populateError } from '../actions/ActionCreators';
 
-export default function api(dispatch = false, authenticated = true) {
+
+export default function api(dispatch = false, showErrorPageOnError = true, populateErrorMessage = true) {
 
     let token = localStorage.getItem('id_token') || null
     let config = {
         baseURL: app_config.apiUrl,
         timeout: 1000,
-    }
-    if(authenticated) {
-        if(token) {
-            config.headers = { 'Authorization': `Bearer ${token}` };
-        } else {
-            throw "No token saved!"
-        }
+    };
+    if(token) {
+        config.headers = { 'Authorization': `Bearer ${token}` };
     }
     var instance = axios.create(config);
     if (dispatch) {
@@ -23,6 +20,12 @@ export default function api(dispatch = false, authenticated = true) {
             return config;
         }, function (error) {
             dispatch(ajaxStop());
+            if (showErrorPageOnError) {
+                dispatch(showHideErrorPage(1));
+            }
+            if (populateErrorMessage) {
+                populateError(error)
+            }
             return Promise.reject(error);
         });
 
@@ -31,6 +34,12 @@ export default function api(dispatch = false, authenticated = true) {
             return response;
         }, function (error) {
             dispatch(ajaxStop());
+            if (showErrorPageOnError) {
+                dispatch(showHideErrorPage(1));
+            }
+            if (populateErrorMessage) {
+                populateError(error)
+            }
             return Promise.reject(error);
         });
     }
