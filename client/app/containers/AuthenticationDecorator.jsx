@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { fetchCurrentUser } from '../actions/ActionCreators';
 
 export default (ChildComponent) => {
     class AuthenticationDecorator extends React.Component {
@@ -23,12 +22,11 @@ export default (ChildComponent) => {
                 router.push('/login');
             }
         }
-        componentDidMount() {
-            this.props.dispatch(fetchCurrentUser());
-        }
         render () {
-            //user.isLoggedIn
-            return (<ChildComponent {...this.props} />)
+            if (this.props.user.isAuthenticated) {
+                return (<ChildComponent {...this.props} />)
+            }
+            return null;
         }
     }
 

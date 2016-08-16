@@ -24,6 +24,7 @@ class LayoutContainer extends React.Component {
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(ActionCreators.fetchMetadata());
+        dispatch(ActionCreators.fetchCurrentUser());
     }
     componentWillReceiveProps(newProps) {
         if (this.props.ui.errorPage !== newProps.ui.errorPage && newProps.ui.errorPage == 1) {
