@@ -37,3 +37,6 @@ body.signin {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.menu-item.active {
+  background-color: rgba(0,0,0,0.0980392) !important;
+}

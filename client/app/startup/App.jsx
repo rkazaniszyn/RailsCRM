@@ -31,10 +31,12 @@ const App = (props, _railsContext) => {
             <IndexRoute component={Dashboard} />
             <Route path="first_page" component={RouterFirstPage} />
             <Route path="second_page" component={RouterSecondPage} />
-            <Route path="modules" component={ModuleContainer}>
-                <Route path=":module" component={ListViewContainer} />
-                <Route path=":module/add" component={RecordViewContainer}/>
-                <Route path=":module/:id(/:mode)" component={RecordViewContainer}/>
+            <Route path="modules">
+                <Route path=":module" component={ModuleContainer}>
+                    <IndexRoute component={ListViewContainer} />
+                    <Route path="add" component={RecordViewContainer}/>
+                    <Route path=":id(/:mode)" component={RecordViewContainer}/>
+                </Route>
             </Route>
             <Route path="/error" component={ErrorPageContainer}/>
            </Route>

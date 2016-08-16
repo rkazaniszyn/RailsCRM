@@ -68,7 +68,7 @@ class RecordViewContainer extends React.Component {
         const { record, metadata, params, onRecordDelete } = this.props;
         let { mode } = this.props.params;
         let saveRecord = this.updateRecord;
-        if (/\/add$/.test(this.props.route.path)) {
+        if (/^add$/.test(this.props.route.path)) {
             mode = 'add';
             saveRecord = this.addRecord;
         }
