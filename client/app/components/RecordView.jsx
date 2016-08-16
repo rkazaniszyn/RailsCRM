@@ -63,8 +63,10 @@ export default class RecordView extends React.Component {
             buttons.push(<RaisedButton onTouchTap={this.onCancelClick.bind(this)} key="cancel" label="Cancel"/>);
             buttons.push(<RaisedButton style={{marginLeft:'10px'}} type="submit" key="submit" label={label} primary={true}/>);
         } else {
+            //mode == show
             buttons.push(<RaisedButton onTouchTap={this.onEditClick.bind(this)} key="edit" label="Edit"/>);
             buttons.push(<RaisedButton style={{marginLeft:'10px'}} onTouchTap={this.onDeleteClick.bind(this)} key="delete" label="Delete Record" secondary={true}/>);
+
         }
         return (
             <form onSubmit={this.handleFormSubmit.bind(this)}>

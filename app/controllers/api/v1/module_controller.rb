@@ -2,7 +2,7 @@ class Api::V1::ModuleController < Api::V1::ApiController
   rescue_from ::ActiveRecord::RecordNotFound, :with => :record_not_found
   before_filter :authenticate_request!
   def index
-    records = model_name.constantize.all
+    records = model_name.constantize.order('created_at DESC').all
     render json: records
   end
   def show
