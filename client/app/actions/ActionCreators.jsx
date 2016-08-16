@@ -172,7 +172,6 @@ export function showHideErrorPage(errorPage = 0) {
 
 export function loginUser(creds) {
     return dispatch => {
-        // We dispatch requestLogin to kickoff the call to the API
         return api(dispatch, false).post('/auth_user', {
             'email':creds.email,
             'password':creds.password})
@@ -191,7 +190,6 @@ export function loginUser(creds) {
     }
 }
 
-// Logs the user out
 export function logoutUser() {
     return dispatch => {
         localStorage.removeItem('id_token')

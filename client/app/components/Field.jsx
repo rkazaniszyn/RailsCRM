@@ -6,6 +6,8 @@ import _ from 'lodash';
 export default class Field extends React.Component {
 
     handleDateChange(event, date) {
+        //datepicker gives us a Date object rather than string here
+        //we need to change it to string in Y-m-d format
         let day = ('0' + date.getDate()).slice(-2);
         let month = ('0' + (date.getMonth()+1)).slice(-2);
         let year = date.getFullYear();
@@ -21,6 +23,7 @@ export default class Field extends React.Component {
             switch(metadata.field_type) {
                 case 'date':
                     if (!_.isEmpty(value)) {
+                        //change string to Date object for datepicker
                         var date = new Date(Date.parse(value));
                     } else {
                         var date = null
