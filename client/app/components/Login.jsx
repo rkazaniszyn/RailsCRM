@@ -19,7 +19,7 @@ export default class Login extends React.Component {
                 <ReduxToastr
                     timeOut={2000}
                     newestOnTop={false}
-                    position="top-left"/>
+                    position="top-right"/>
                 <form onSubmit={(event) => this.handleClick(event)} className="form-signin">
                     <h2 className="form-signin-heading">Please sign in</h2>
                     <label htmlFor="inputEmail" className="sr-only">Email address</label>

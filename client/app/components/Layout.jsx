@@ -14,7 +14,7 @@ class Layout extends React.Component {
                 <ReduxToastr
                     timeOut={2000}
                     newestOnTop={false}
-                    position="top-left"/>
+                    position="top-right"/>
 
                 <div style={{paddingLeft: '256px'}}>
                     <HeaderToolbar {...this.props} />
