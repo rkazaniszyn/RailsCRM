@@ -77,7 +77,7 @@ export function fetchRecords(module) {
         return api(dispatch).get('/'+module)
             .then((json) => {
                 dispatch(receiveRecords(json.data))
-            }).catch(() => {/*custom error handling if needed*/});
+            }).catch((error) => {/*custom error handling if needed*/});
     }
 }
 export function fetchRecord(module, id)
@@ -86,7 +86,7 @@ export function fetchRecord(module, id)
         return api(dispatch).get('/'+module+'/'+id)
             .then((json) => {
                 dispatch(receiveRecord(json.data))
-            }).catch(() => {/*custom error handling if needed*/});
+            }).catch((error) => {/*custom error handling if needed*/});
     }
 }
 
@@ -98,7 +98,7 @@ export function updateRecord(module, id, data, callback = function(){})
                 populateSuccess('Record has been updated.');
                 dispatch(receiveRecord(json.data))
                 callback();
-            }).catch(() => {/*custom error handling if needed*/});
+            }).catch((error) => {/*custom error handling if needed*/});
     }
 }
 
@@ -110,7 +110,7 @@ export function addRecord(module, data, callback = function(){})
                 populateSuccess('Record has been created.');
                 dispatch(receiveRecord(json.data));
                 callback();
-            }).catch(() => {/*custom error handling if needed*/});
+            }).catch((error) => {/*custom error handling if needed*/});
     }
 }
 
@@ -122,7 +122,7 @@ export function deleteRecord(module, id, callback = function() {})
                 populateSuccess('Record has been deleted.');
                 dispatch(fetchRecords(module));
                 callback();
-            }).catch(() => {/*custom error handling if needed*/});
+            }).catch((error) => {/*custom error handling if needed*/});
     }
 }
 
@@ -133,7 +133,7 @@ export function fetchMetadata()
             return api(dispatch).get('/metadata/all')
                 .then((json) => {
                     dispatch(receiveMetadata(json.data))
-                }).catch(() => {/*custom error handling if needed*/});
+                }).catch((error) => {/*custom error handling if needed*/});
         }
     }
 }
@@ -145,7 +145,7 @@ export function fetchCurrentUser()
             return api(dispatch).get('/me')
                 .then((json) => {
                     dispatch(receiveUser(json.data))
-                }).catch(() => {/*custom error handling if needed*/});
+                }).catch((error) => {/*custom error handling if needed*/});
         }
     }
 }
@@ -186,7 +186,7 @@ export function loginUser(creds) {
                     dispatch(receiveLogin(user))
                     populateSuccess('Hurraaay! You are logged in.');
                 }
-            }).catch(()=>{/*custom error handling if needed*/});
+            }).catch((error)=>{});
     }
 }
 
