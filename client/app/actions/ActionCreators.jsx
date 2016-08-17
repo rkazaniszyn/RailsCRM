@@ -186,13 +186,15 @@ export function loginUser(creds) {
                     dispatch(receiveLogin(user))
                     populateSuccess('Hurraaay! You are logged in.');
                 }
-            }).catch((error)=>{});
+            }).catch(error => {
+                console.log(error);
+            });
     }
 }
 
 export function logoutUser() {
     return dispatch => {
-        localStorage.removeItem('id_token')
+        localStorage.removeItem('id_token');
         dispatch(receiveLogout())
         populateSuccess('You have been logged out.')
     }
