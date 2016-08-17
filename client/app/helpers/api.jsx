@@ -8,7 +8,7 @@ export default function api(dispatch = false, showErrorPageOnError = true, popul
     let token = localStorage.getItem('id_token') || null
     let config = {
         baseURL: app_config.apiUrl,
-        timeout: 1000,
+        //timeout: 5000,
     };
     if(token) {
         config.headers = { 'Authorization': `Bearer ${token}` };
