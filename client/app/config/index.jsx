@@ -1,4 +1,6 @@
-let config = {}
+let config = {
+    listRecordsLimit: 2
+}
 switch (process.env.NODE_ENV) {
     case 'development' :
         config.apiUrl = document.location.protocol+'//localhost:5000/api/v1';

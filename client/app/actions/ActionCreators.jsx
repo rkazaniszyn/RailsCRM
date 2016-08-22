@@ -2,6 +2,7 @@ import api from '../helpers/api';
 import { toastr } from 'react-redux-toastr';
 import { pendingTask, begin, end } from 'react-redux-spinner';
 import _ from 'lodash';
+import config from '../config';
 
 export function ajaxStart() {
     return {
@@ -16,10 +17,12 @@ export function ajaxStop() {
     }
 }
 
-function receiveRecords(json) {
+function receiveRecords(json, offset = 0, allDataLoaded = false) {
     return {
         type: 'RECEIVE_RECORDS',
         records: json,
+        offset,
+        allDataLoaded
     }
 }
 
@@ -72,11 +75,17 @@ function receiveMetadata(json) {
     }
 }
 
-export function fetchRecords(module) {
-    return function (dispatch) {
-        return api(dispatch).get('/'+module)
+export function fetchRecords(module, offset = 0, limit = config.listRecordsLimit) {
+    return function (dispatch, getState) {
+        return api(dispatch).get('/'+module, {
+                params: {
+                    offset,
+                    limit
+                }
+            })
             .then((json) => {
-                dispatch(receiveRecords(json.data))
+                const allDataLoaded = json.data.all <= (getState().records.get('items').size + json.data.records.length);
+                dispatch(receiveRecords(json.data.records, offset, allDataLoaded))
             }).catch((error) => {/*custom error handling if needed*/});
     }
 }
@@ -120,7 +129,10 @@ export function deleteRecord(module, id, callback = function() {})
         return api(dispatch).delete('/'+module+'/'+id)
             .then((json) => {
                 populateSuccess('Record has been deleted.');
-                dispatch(fetchRecords(module));
+                dispatch({
+                    type: 'DELETE_RECORD',
+                    id
+                });
                 callback();
             }).catch((error) => {/*custom error handling if needed*/});
     }

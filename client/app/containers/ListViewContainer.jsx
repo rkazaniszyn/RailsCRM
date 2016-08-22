@@ -3,6 +3,7 @@ import ListView from '../components/ListView';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../actions/ActionCreators';
+import config from '../config';
 
 function select(state, props) {
     const metadata = state.metadata.get('modules').toJS()[props.params.module] || [];
@@ -33,11 +34,17 @@ class ListViewContainer extends React.Component {
             dispatch(ActionCreators.fetchRecords(newProps.params.module));
         }
     }
+    loadMoreRecords() {
+        const { dispatch } = this.props;
+        const { module } = this.props.params;
+        const newOffset = parseInt(this.props.records.offset) + config.listRecordsLimit;
+        dispatch(ActionCreators.fetchRecords(module, newOffset));
+    }
     render() {
         const { records, params, metadata, onRecordDelete } = this.props;
         if (metadata.length) {
             return (
-                <ListView {...{params, metadata, records, onRecordDelete}}/>
+                <ListView {...{params, metadata, records, onRecordDelete}} loadMoreRecords={this.loadMoreRecords.bind(this)}/>
             );
         }
         return null;

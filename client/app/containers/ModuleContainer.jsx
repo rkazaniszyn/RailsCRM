@@ -12,8 +12,9 @@ class ModuleContainer extends React.Component {
         var self = this;
         const toastrConfirmOptions = {
             onOk: () => {
-                dispatch(ActionCreators.deleteRecord(module, id));
-                self.context.router.push('/modules/'+module);
+                dispatch(ActionCreators.deleteRecord(module, id)).then(function() {
+                    self.context.router.push('/modules/'+module);
+                });
             },
             onCancel: () => true
         };

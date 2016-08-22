@@ -39,7 +39,7 @@ const App = (props, _railsContext) => {
                 </Route>
             </Route>
             <Route path="/error" component={ErrorPageContainer}/>
-           </Route>
+          </Route>
           <Route path="/login" component={LoginContainer}/>
           <Route path="*" component={NotFoundRoute} />
         </Router>
